@@ -7,6 +7,8 @@ var qztime = 50;
 var qzpos  = 0;
 var qzscore = 0;
 
+
+//Questions to be displayed by the quiz
 var questions = [
     ['Inside which HTML element do we put the JavaScript?', '&lt;scripting&gt;', '&lt;js&gt;', '&lt;script&gt;', '&lt;javascript&gt;', 'C'],
     ['What is the correct syntax for referring to an external script called "xxx.js"?', '&lt;script name="xxx.js"&gt;', '&lt;script src="xxx.js"&gt;', '&lt;script href="xxx.js"&gt;', '&lt;script "xxx.js"&gt;', 'B'],
@@ -15,6 +17,7 @@ var questions = [
     ['How do you write an IF statement in JavaScript?', 'IF i = 5 then', 'IF i = 5', 'IF i === 5 then', 'IF( i == 5 )', 'D'],
 ]
 
+//Interval to start chronograph
 var myInterval;
 
 startbutton.addEventListener("click", function(){
@@ -25,6 +28,7 @@ startbutton.addEventListener("click", function(){
 
 })
 
+//handle chronograph, when times up then end quiz
 function updateCountDown(){
 
     if (qztime > 0){
@@ -43,6 +47,7 @@ function updateCountDown(){
     
 }
 
+//move to next question
 function nextquestion(){
 
     if ( qzpos < questions.length ){
@@ -59,6 +64,7 @@ function nextquestion(){
 
 }
 
+//print next question
 function printquestion(){
 
     qzquestion.innerHTML = '<br><h2>' + questions[qzpos][0] + '</h2><br>';
@@ -69,12 +75,14 @@ function printquestion(){
 
 }
 
+//print quiz status
 function printstatus(){
 
     qzstatus.innerHTML = '<h1>Question: ' + (qzpos+1) +  ' / '+ questions.length +'</h1>';
 
 }
 
+//handle answer, if correct add 20 points to score, if incorrect penalize chrono with 10 sec.
 function checkanswer(value, qzindex){
     
     if ( value == questions[qzindex][5] ){
@@ -90,6 +98,7 @@ function checkanswer(value, qzindex){
 
 }
 
+//times up, print submit score
 function timesUp(){
 
     qztime = 0;
@@ -107,6 +116,7 @@ function timesUp(){
 
 }
 
+//print submit score
 function submitquiz(){
 
     clearInterval(myInterval);
@@ -123,6 +133,7 @@ function submitquiz(){
 
 }
 
+//save score in local memory.
 function saveScore(){
 
     var lclinitials = document.querySelector('#initials');
@@ -161,6 +172,7 @@ function saveScore(){
 
 }
 
+//print scores
 function seeScores(){
 
     var lcltopScores = [];
@@ -182,8 +194,8 @@ function seeScores(){
         }
     }
 
-    qzheader.innerHTML = 'Coding Quiz Challenge Scores';
-    qzquestion.innerHTML = 'Scores:';
+    qzheader.innerHTML = 'Coding Quiz Challenge Scores:';
+    qzquestion.innerHTML = '<br><h2>Scores:</h2><br>';
     htmlstr += '</table>';
     qzoptions.innerHTML = htmlstr;
     qzstatus.innerHTML = '<button class="btn" id="back-button" onclick="refresh()"> BACK </button><br><br>';
@@ -191,10 +203,12 @@ function seeScores(){
 
 }
 
+//reload page
 function refresh(){
     window.location.reload()
 }
 
+//clear local storage, ONLY erases vars used by the app, it does not clear other vars in local storage that may be used by other apps
 function clearlclstorage(){
 
     var lcltopScores = [];
